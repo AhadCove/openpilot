@@ -125,6 +125,8 @@ void *safety_setter_thread(void *s) {
 
   int safety_model = int(car_params.getSafetyModel());
   auto safety_param = car_params.getSafetyParam();
+  safety_param = 2; // 2 means Toyota_safety`
+  
   LOGW("setting safety model: %d with param %d", safety_model, safety_param);
 
   pthread_mutex_lock(&usb_lock);

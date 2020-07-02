@@ -50,6 +50,8 @@ def joystick_thread():
     for a in range(joystick.get_numaxes()):
       axes.append(joystick.get_axis(a))
 
+    print('axes: ', axes)
+    
     for b in range(joystick.get_numbuttons()):
       buttons.append(bool(joystick.get_button(b)))
 

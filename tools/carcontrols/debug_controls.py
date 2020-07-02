@@ -22,7 +22,7 @@ def steer_thread():
   sendcan = messaging.pub_sock('sendcan')
 
   button_1_last = 0
-  enabled = False
+  enabled = True
 
   # wait for health and CAN packets
   hw_type = messaging.recv_one(health).health.hwType
@@ -47,8 +47,10 @@ def steer_thread():
     actuators = car.CarControl.Actuators.new_message()
 
     if joystick is not None:
+      print('joystick: ', joystick)
       axis_3 = clip(-joystick.testJoystick.axes[3] * 1.05, -1., 1.)          # -1 to 1
-      actuators.steer = axis_3
+      # actuators.steer = axis_3
+      actuators.steer = axis_3*1000
       actuators.steerAngle = axis_3 * 43.   # deg
       axis_1 = clip(-joystick.testJoystick.axes[1] * 1.05, -1., 1.)          # -1 to 1
       actuators.gas = max(axis_1, 0.)
@@ -56,8 +58,8 @@ def steer_thread():
 
       pcm_cancel_cmd = joystick.testJoystick.buttons[0]
       button_1 = joystick.testJoystick.buttons[1]
-      if button_1 and not button_1_last:
-        enabled = not enabled
+      # if button_1 and not button_1_last:
+      #   enabled = not enabled
 
       button_1_last = button_1
 
